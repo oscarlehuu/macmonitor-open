@@ -1,0 +1,17 @@
+DerivedData/
+.build/
+build/
+*.xcuserstate
+*.xcworkspace/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+.DS_Store
+dist/*.zip
+
+# Local draft artifacts
+plans/icon-variants/
+plans/macmonitor-icon-draft*.png
+plans/*-mock.html
+
+# Coverage artifacts
+*.profraw
+*.profdata

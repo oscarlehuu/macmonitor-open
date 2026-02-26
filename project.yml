@@ -1,0 +1,103 @@
+name: MacMonitor
+options:
+  bundleIdPrefix: com.oscar
+configs:
+  Debug: debug
+  Release: release
+settings:
+  base:
+    SWIFT_VERSION: 6.0
+packages:
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    from: 2.8.0
+targets:
+  MacMonitor:
+    type: application
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - MacMonitor/Sources
+    dependencies:
+      - target: BatteryHelper
+      - target: MacMonitorWidget
+      - package: Sparkle
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.oscar.macmonitor
+        PRODUCT_NAME: MacMonitor
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_FILE: MacMonitor/Config/App-Info.plist
+        CURRENT_PROJECT_VERSION: 1
+        MARKETING_VERSION: 0.1.0
+        SPARKLE_APPCAST_URL: "https://oscarlehuu.github.io/macmonitor-updates/appcast.xml"
+        SPARKLE_PUBLIC_ED_KEY: "zDPSx0PEYWhHawIvT2UGPeIzkJtD14DSoh7Xl7KsVUU="
+      configs:
+        Release:
+          CODE_SIGN_ENTITLEMENTS: MacMonitor/Config/Release.entitlements
+          ENABLE_HARDENED_RUNTIME: YES
+    postBuildScripts:
+      - name: Embed Battery Helper
+        script: |
+          helper_binary="${BUILT_PRODUCTS_DIR}/com.oscar.macmonitor.battery-helper"
+          helper_destination_dir="${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Library/LaunchServices"
+          helper_destination="${helper_destination_dir}/com.oscar.macmonitor.battery-helper"
+          icon_source="${SRCROOT}/MacMonitor/Config/AppIcon.icns"
+          icon_destination_dir="${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Resources"
+          icon_destination="${icon_destination_dir}/AppIcon.icns"
+
+          if [ -f "${helper_binary}" ]; then
+            mkdir -p "${helper_destination_dir}"
+            cp "${helper_binary}" "${helper_destination}"
+            chmod 755 "${helper_destination}"
+          fi
+
+          if [ -f "${icon_source}" ]; then
+            mkdir -p "${icon_destination_dir}"
+            cp "${icon_source}" "${icon_destination}"
+          fi
+    scheme:
+      gatherCoverageData: true
+      testTargets:
+        - MacMonitorTests
+  BatteryHelper:
+    type: tool
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - MacMonitor/Helper/Sources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.oscar.macmonitor.battery-helper
+        PRODUCT_NAME: com.oscar.macmonitor.battery-helper
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_FILE: MacMonitor/Helper/Info.plist
+        CREATE_INFOPLIST_SECTION_IN_BINARY: YES
+        OTHER_CODE_SIGN_FLAGS: --identifier com.oscar.macmonitor.battery-helper
+        CURRENT_PROJECT_VERSION: 1
+        MARKETING_VERSION: 0.1.0
+  MacMonitorWidget:
+    type: app-extension
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - MacMonitorWidget/Sources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.oscar.macmonitor.widget
+        PRODUCT_NAME: MacMonitorWidget
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_FILE: MacMonitorWidget/Info.plist
+        CURRENT_PROJECT_VERSION: 1
+        MARKETING_VERSION: 0.1.0
+  MacMonitorTests:
+    type: bundle.unit-test
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - MacMonitor/Tests
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: MacMonitor

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleExecutable</key>
+    <string>com.oscar.macmonitor.battery-helper</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.oscar.macmonitor.battery-helper</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>MacMonitorBatteryHelper</string>
+    <key>CFBundlePackageType</key>
+    <string>BNDL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>0.1.0</string>
+    <key>CFBundleVersion</key>
+    <string>1</string>
+    <key>Label</key>
+    <string>com.oscar.macmonitor.battery-helper</string>
+    <key>MachServices</key>
+    <dict>
+        <key>com.oscar.macmonitor.battery-helper</key>
+        <true/>
+    </dict>
+    <key>SMAuthorizedClients</key>
+    <array>
+        <string>identifier "com.oscar.macmonitor" and anchor apple generic</string>
+    </array>
+</dict>
+</plist>

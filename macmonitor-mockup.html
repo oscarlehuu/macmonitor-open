@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MacMonitor Interactive Redesign</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            /* Dark Theme (Default) */
+            --panel-bg: rgba(28, 28, 32, 0.75);
+            --panel-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f5f5f7;
+            --text-muted: #a1a1a6;
+            --accent: #5e5ce6;
+            --accent-hover: #7b7ae6;
+            --success: #32d74b;
+            --warning: #ff9f0a;
+            --danger: #ff453a;
+            --blue: #0a84ff;
+            --purple: #bf5af2;
+            --bg-hover: rgba(255, 255, 255, 0.08);
+            --card-bg: rgba(0, 0, 0, 0.25);
+            --card-border: rgba(255, 255, 255, 0.05);
+            --header-bg: rgba(255, 255, 255, 0.02);
+            --tab-active-bg: rgba(255, 255, 255, 0.1);
+            --tab-active-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            --list-item-bg: rgba(255, 255, 255, 0.02);
+            --input-bg: rgba(0, 0, 0, 0.3);
+            --checkbox-border: rgba(255, 255, 255, 0.3);
+            --checkbox-bg: rgba(0, 0, 0, 0.2);
+
+            --font-family: 'Inter', -apple-system, sans-serif;
+            --app-bg: url('https://images.unsplash.com/photo-1614850715649-1d0106293cb1?q=80&w=2564');
+        }
+
+        body.light-theme {
+            /* Light Theme */
+            --panel-bg: rgba(255, 255, 255, 0.85);
+            --panel-border: rgba(0, 0, 0, 0.1);
+            --text-main: #1d1d1f;
+            --text-muted: #86868b;
+            --bg-hover: rgba(0, 0, 0, 0.05);
+            --card-bg: rgba(255, 255, 255, 0.6);
+            --card-border: rgba(0, 0, 0, 0.05);
+            --header-bg: rgba(0, 0, 0, 0.02);
+            --tab-active-bg: rgba(0, 0, 0, 0.06);
+            --tab-active-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.02);
+            --list-item-bg: rgba(255, 255, 255, 0.4);
+            --input-bg: rgba(0, 0, 0, 0.04);
+            --checkbox-border: rgba(0, 0, 0, 0.2);
+            --checkbox-bg: rgba(255, 255, 255, 0.5);
+
+            --app-bg: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2564');
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--app-bg) no-repeat center center fixed;
+            background-size: cover;
+            font-family: var(--font-family);
+            color: var(--text-main);
+            transition: background 0.5s ease, color 0.3s ease;
+            position: relative;
+        }
+
+        /* Fake macOS Menu Bar */
+        .mac-menubar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 32px;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            font-size: 13px;
+            font-weight: 500;
+            z-index: 100;
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+        }
+
+        body.light-theme .mac-menubar {
+            background: rgba(255, 255, 255, 0.4);
+            color: black;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .menubar-left,
+        .menubar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .menubar-item {
+            cursor: default;
+        }
+
+        .macmonitor-menubar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            cursor: pointer;
+            font-variant-numeric: tabular-nums;
+            transition: background 0.2s;
+        }
+
+        .macmonitor-menubar:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        body.light-theme .macmonitor-menubar {
+            background: rgba(0, 0, 0, 0.06);
+        }
+
+        body.light-theme .macmonitor-menubar:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .popover {
+            width: 440px;
+            height: 640px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(48px);
+            -webkit-backdrop-filter: blur(48px);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            padding-top: 0;
+            transition: background 0.3s ease, border-color 0.3s ease;
+            margin-top: 32px;
+            /* For the menubar */
+        }
+
+        body.light-theme .popover {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        /* Header & Navigation */
+        .header {
+            padding: 16px 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            border-bottom: 1px solid var(--panel-border);
+            background: var(--header-bg);
+            z-index: 10;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 4px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-hover);
+            color: var(--text-main);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 4px;
+            padding-bottom: 12px;
+        }
+
+        .nav-tab {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 4px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .nav-tab:hover {
+            background: var(--bg-hover);
+            color: var(--text-main);
+        }
+
+        .nav-tab.active {
+            background: var(--tab-active-bg);
+            color: var(--text-main);
+            box-shadow: var(--tab-active-shadow);
+        }
+
+        /* Screens */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+        }
+
+        .screen {
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* UI Elements */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        body.light-theme .card {
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.05em;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 4px;
+            display: flex;
+            overflow: hidden;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        body:not(.light-theme) .progress-track {
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .progress-segment {
+            height: 100%;
+            transition: width 0.8s ease;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stat-value {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        /* Tables & Lists */
+        .list-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            padding: 0 12px 8px;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+            border-bottom: 1px solid var(--card-border);
+            margin-bottom: 8px;
+        }
+
+        .list-header.apps {
+            grid-template-columns: 2fr 1fr auto;
+        }
+
+        .list-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--list-item-bg);
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: 0.2s;
+            margin-bottom: 4px;
+        }
+
+        .list-item:hover {
+            background: var(--bg-hover);
+            border-color: var(--card-border);
+        }
+
+        .list-item.apps {
+            grid-template-columns: 2fr 1fr auto;
+            gap: 12px;
+            background: transparent;
+            padding: 10px 0;
+            border-radius: 0;
+            border-bottom: 1px solid var(--card-border);
+            margin-bottom: 0;
+        }
+
+        .list-item.apps:hover {
+            background: transparent;
+            border-color: var(--card-border);
+            opacity: 0.8;
+        }
+
+        .list-item.apps:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+
+        .item-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--bg-hover);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        body.light-theme .item-icon {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .item-value {
+            color: var(--text-muted);
+            font-variant-numeric: tabular-nums;
+            text-align: right;
+            font-weight: 500;
+        }
+
+        .item-subtext {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 400;
+        }
+
+        /* Selects */
+        .custom-select {
+            background: var(--input-bg);
+            color: var(--text-main);
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-family: var(--font-family);
+            font-size: 12px;
+            outline: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        body.light-theme .custom-select {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .custom-select:hover {
+            border-color: var(--text-muted);
+        }
+
+        /* Buttons & Controls */
+        .btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+
+        .btn-full {
+            width: 100%;
+            padding: 10px;
+        }
+
+        .btn-primary {
+            background: var(--bg-hover);
+            color: var(--text-main);
+            border: 1px solid var(--card-border);
+        }
+
+        .btn-primary:hover {
+            background: var(--panel-border);
+            transform: translateY(-1px);
+        }
+
+        .btn-danger {
+            background: rgba(255, 69, 58, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(255, 69, 58, 0.2);
+        }
+
+        .btn-danger:hover {
+            background: rgba(255, 69, 58, 0.15);
+            border-color: rgba(255, 69, 58, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .btn-danger:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            background: var(--bg-hover);
+            border-color: transparent;
+            color: var(--text-muted);
+        }
+
+        .btn-icon {
+            padding: 6px;
+            border-radius: 6px;
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid transparent;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-icon:hover {
+            background: var(--bg-hover);
+            color: var(--text-main);
+        }
+
+        .btn-icon.delete:hover {
+            background: rgba(255, 69, 58, 0.1);
+            color: var(--danger);
+        }
+
+        /* Toggles */
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            border-bottom: 1px solid var(--card-border);
+            padding: 12px 0;
+        }
+
+        .setting-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .setting-row:first-child {
+            padding-top: 0;
+        }
+
+        .toggle {
+            appearance: none;
+            width: 40px;
+            height: 22px;
+            background: rgba(120, 120, 128, 0.32);
+            border-radius: 11px;
+            position: relative;
+            cursor: pointer;
+            outline: none;
+            transition: 0.3s;
+            margin: 0;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .toggle:checked {
+            background: var(--success);
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            top: 1px;
+            left: 2px;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .toggle:checked::after {
+            transform: translateX(18px);
+        }
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--input-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 4px;
+        }
+
+        body.light-theme .search-bar {
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            width: 100%;
+            font-family: var(--font-family);
+            font-size: 13px;
+            outline: none;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Checkbox */
+        .custom-checkbox {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1px solid var(--checkbox-border);
+            border-radius: 4px;
+            background: var(--checkbox-bg);
+            cursor: pointer;
+            position: relative;
+            transition: 0.2s;
+            margin: 0;
+        }
+
+        .custom-checkbox:checked {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .custom-checkbox:checked::after {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 1px;
+            width: 4px;
+            height: 8px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .footer {
+            padding: 12px 20px;
+            background: var(--header-bg);
+            border-top: 1px solid var(--panel-border);
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 200;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+            animation: fadeIn 0.2s ease forwards;
+        }
+
+        .modal-content {
+            width: 320px;
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transform: scale(0.95);
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        body.light-theme .modal-content {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            background: var(--panel-bg);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .input-group select,
+        .input-group input[type="time"] {
+            width: 100%;
+            background: var(--input-bg);
+            color: var(--text-main);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-family: var(--font-family);
+            font-size: 13px;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        .input-group select:focus,
+        .input-group input[type="time"]:focus {
+            border-color: var(--accent);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 24px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(128, 128, 128, 0.3);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(128, 128, 128, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- MOCK MENU BAR at top of browser -->
+    <div class="mac-menubar">
+        <div class="menubar-left">
+            <svg width="14" height="14" viewBox="0 0 170 170" fill="currentColor">
+                <path
+                    d="M106.84,18.06c7.09-8.48,11.83-20.62,10.51-32.61c-10.46,0.44-23.27,7.12-30.63,15.54 c-6.52,7.49-12.06,19.86-10.51,31.57C87.89,32.89,99.98,26.17,106.84,18.06z M112.56,36.54c-11.83,0-23.63,8.08-30.82,8.08 c-7.39,0-17.65-7.85-27.46-7.85c-12.86,0-24.84,7.49-31.42,19.34c-13.34,23.49-3.41,58.07,9.66,77.34 c6.42,9.37,13.91,19.88,24.03,19.45c9.51-0.44,13.25-6.32,24.81-6.32c11.53,0,15.02,6.32,25.04,6.09 c10.38-0.22,16.89-9.58,23.3-19.06c7.43-10.89,10.5-21.49,10.66-22.06c-0.22-0.12-20.5-7.91-20.73-31.54 c-0.21-19.67,16-29.08,16.75-29.58C126.96,44.25,115.15,36.54,112.56,36.54z" />
+            </svg>
+            <span class="menubar-item" style="font-weight: 700;">MacMonitor</span>
+            <span class="menubar-item">File</span>
+            <span class="menubar-item">Edit</span>
+            <span class="menubar-item">View</span>
+            <span class="menubar-item">Window</span>
+            <span class="menubar-item">Help</span>
+        </div>
+        <div class="menubar-right">
+            <span class="menubar-item"><i data-lucide="wifi" width="14" height="14"></i></span>
+            <span class="menubar-item"><i data-lucide="battery-charging" width="14" height="14"></i></span>
+            <span class="menubar-item" style="font-variant-numeric: tabular-nums;">Tue 9:41 AM</span>
+
+            <!-- The Configurable MacMonitor Menu Item -->
+            <div class="macmonitor-menubar" id="macmonitor-menubar">
+                <i data-lucide="activity" width="14" height="14"></i>
+                <span style="font-size:12px; font-weight:600;" id="menubar-text">RAM: 78%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="popover">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <div class="header-title">
+                    <i data-lucide="activity" width="18" height="18" color="var(--accent)"></i> MacMonitor
+                </div>
+                <div class="header-actions">
+                    <div
+                        style="font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 4px;">
+                        <div class="dot" style="background: var(--success); box-shadow: 0 0 8px var(--success);"></div>
+                        Nominal
+                    </div>
+                    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Light/Dark Mode" id="theme-btn">
+                        <i data-lucide="sun" width="16" height="16"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="switchScreen('memory', this)">
+                    <i data-lucide="cpu" width="18" height="18"></i> <span>Memory</span>
+                </button>
+                <button class="nav-tab" onclick="switchScreen('storage-apps', this)">
+                    <i data-lucide="hard-drive" width="18" height="18"></i> <span>Storage</span>
+                </button>
+                <button class="nav-tab" onclick="switchScreen('telemetry', this)">
+                    <i data-lucide="activity" width="18" height="18"></i> <span>Telemetry</span>
+                </button>
+                <button class="nav-tab" onclick="switchScreen('battery', this)">
+                    <i data-lucide="battery-charging" width="18" height="18"></i> <span>Power</span>
+                </button>
+                <button class="nav-tab" onclick="switchScreen('settings', this)">
+                    <i data-lucide="settings" width="18" height="18"></i> <span>Settings</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 1. MEMORY -->
+        <div class="content screen active" id="screen-memory">
+            <div class="card">
+                <div class="section-title">Physical Memory</div>
+                <div class="progress-header"><span>16 GB Total</span><span style="color:var(--text-main)">12.4 GB
+                        Used</span></div>
+                <div class="progress-track" style="margin-bottom: 8px;">
+                    <div class="progress-segment" style="width: 45%; background: var(--accent);"></div>
+                    <div class="progress-segment" style="width: 20%; background: var(--blue);"></div>
+                    <div class="progress-segment" style="width: 12%; background: var(--warning);"></div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-label">
+                            <div class="dot" style="background: var(--accent)"></div> App Memory
+                        </div>
+                        <div class="stat-value">7.2 GB</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">
+                            <div class="dot" style="background: var(--blue)"></div> Wired Memory
+                        </div>
+                        <div class="stat-value">3.2 GB</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">
+                            <div class="dot" style="background: var(--warning)"></div> Compressed
+                        </div>
+                        <div class="stat-value">2.0 GB</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">
+                            <div class="dot" style="background: #8e8e93"></div> Cached
+                        </div>
+                        <div class="stat-value">3.5 GB</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="flex: 1; display: flex; flex-direction: column;">
+                <div class="section-title" style="display: flex; justify-content: space-between;">
+                    <span>Top Memory Processes</span>
+                    <span class="btn-icon" style="padding: 0;"><i data-lucide="bar-chart-2" width="12"
+                            height="12"></i></span>
+                </div>
+                <div class="list-header">
+                    <div>Process Name</div>
+                    <div style="text-align: right;">Memory</div>
+                </div>
+                <div
+                    style="flex: 1; overflow-y: auto; padding-right: 4px; display: flex; flex-direction: column; gap: 4px;">
+                    <label class="list-item">
+                        <div class="item-name"><input type="checkbox" class="custom-checkbox mem-cb"
+                                onchange="updateMemBtn()"> Google Chrome</div>
+                        <div class="item-value">2.4 GB</div>
+                    </label>
+                    <label class="list-item">
+                        <div class="item-name"><input type="checkbox" class="custom-checkbox mem-cb"
+                                onchange="updateMemBtn()"> Docker Desktop</div>
+                        <div class="item-value">1.8 GB</div>
+                    </label>
+                    <label class="list-item">
+                        <div class="item-name"><input type="checkbox" class="custom-checkbox mem-cb"
+                                onchange="updateMemBtn()"> WindowServer</div>
+                        <div class="item-value">1.1 GB</div>
+                    </label>
+                </div>
+                <button class="btn btn-full btn-danger" id="mem-term-btn" disabled
+                    style="margin-top: 12px; flex-shrink: 0;">
+                    <i data-lucide="x-circle" width="14" height="14"></i> Quit Selected Processes
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. STORAGE -->
+        <div class="content screen" id="screen-storage-apps">
+            <div class="card" style="flex-shrink: 0;">
+                <div class="section-title"><i data-lucide="hard-drive" width="12" height="12"></i> Macintosh HD</div>
+                <div class="progress-header"><span>1 TB Total</span><span style="color:var(--text-main)">450 GB
+                        Used</span></div>
+                <div class="progress-track" style="margin-bottom: 8px; height: 12px;">
+                    <div class="progress-segment" style="width: 25%; background: var(--blue);"></div>
+                    <div class="progress-segment" style="width: 10%; background: var(--purple);"></div>
+                    <div class="progress-segment" style="width: 5%; background: var(--success);"></div>
+                    <div class="progress-segment" style="width: 5%; background: var(--text-muted);"></div>
+                </div>
+            </div>
+
+            <div class="card" style="flex: 1; display: flex; flex-direction: column; padding: 16px 0;">
+                <div class="section-title" style="padding: 0 16px;"><i data-lucide="layers" width="12" height="12"></i>
+                    Installed Applications</div>
+                <div style="padding: 0 16px;">
+                    <div class="search-bar"><i data-lucide="search" width="14" height="14"
+                            color="var(--text-muted)"></i><input type="text" placeholder="Search apps..."></div>
+                </div>
+                <div class="list-header apps" style="padding: 8px 16px;">
+                    <div>Application</div>
+                    <div style="text-align: right;">Size</div>
+                    <div style="width: 32px;"></div>
+                </div>
+                <div style="flex: 1; overflow-y: auto; padding: 0 16px; display: flex; flex-direction: column;">
+                    <div class="list-item apps">
+                        <div class="item-name">
+                            <div class="item-icon"><i data-lucide="chrome" width="16" height="16" color="#4285F4"></i>
+                            </div>
+                            <div>
+                                <div>Google Chrome</div>
+                                <div class="item-subtext">Last used: Today</div>
+                            </div>
+                        </div>
+                        <div class="item-value">1.4 GB</div><button class="btn-icon delete"><i data-lucide="trash-2"
+                                width="16" height="16"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. TELEMETRY (CPU & Network) -->
+        <div class="content screen" id="screen-telemetry">
+            <div class="card">
+                <div class="section-title"><i data-lucide="cpu" width="12" height="12"></i> CPU Usage</div>
+                <div class="progress-header"><span>Apple Silicon</span><span style="color:var(--text-main)">14%
+                        Used</span></div>
+                <div class="progress-track" style="margin-bottom: 8px;">
+                    <div class="progress-segment" style="width: 14%; background: var(--blue);"></div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-label">
+                            <div class="dot" style="background: var(--blue)"></div> System
+                        </div>
+                        <div class="stat-value">5.2%</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">
+                            <div class="dot" style="background: var(--accent)"></div> User
+                        </div>
+                        <div class="stat-value">8.8%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title"><i data-lucide="wifi" width="12" height="12"></i> Network Traffic</div>
+                <div class="stats-grid" style="margin-top: 8px;">
+                    <div class="stat-item">
+                        <div class="stat-label">
+                            <i data-lucide="arrow-down" width="12" height="12" color="var(--success)"></i> In
+                        </div>
+                        <div class="stat-value">124 KB/s</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">
+                            <i data-lucide="arrow-up" width="12" height="12" color="var(--blue)"></i> Out
+                        </div>
+                        <div class="stat-value">45 KB/s</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. BATTERY -->
+        <div class="content screen" id="screen-battery">
+            <div class="card">
+                <div class="section-title"><i data-lucide="battery" width="12" height="12"></i> Battery Status</div>
+                <div class="progress-header"><span>Health: Normal (95%)</span><span
+                        style="color:var(--success)">82%</span></div>
+                <div class="progress-track" style="margin-bottom: 8px; height: 12px;">
+                    <div class="progress-segment" style="width: 82%; background: var(--success);"></div>
+                </div>
+                <div
+                    style="font-size: 11px; color: var(--text-muted); display:flex; gap:6px; align-items:center; margin-top: 12px;">
+                    <i data-lucide="plug" width="12" height="12"></i> Power Source: Power Adapter
+                </div>
+            </div>
+
+            <div class="card" style="flex: 1; display:flex; flex-direction:column;">
+                <div class="section-title" style="display:flex; justify-content:space-between; align-items:center;">
+                    <span><i data-lucide="clock" width="12" height="12"></i> Task Schedule</span>
+                    <button class="btn-icon" style="padding:6px; margin:0;" onclick="openModal()"><i data-lucide="plus"
+                            width="16" height="16"></i></button>
+                </div>
+
+                <div
+                    style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-top: 4px;">
+                    <!-- Pending Task 1 -->
+                    <div class="list-item apps"
+                        style="border: 1px solid var(--card-border); padding: 10px; border-radius: 8px;">
+                        <div class="item-name">
+                            <div class="item-icon"><i data-lucide="battery-charging" width="16" height="16"
+                                    color="var(--success)"></i></div>
+                            <div>
+                                <div style="font-size: 13px; font-weight: 500; color: var(--text-main);">Top Up to 100%
+                                </div>
+                                <div class="item-subtext">Today at 4:30 PM</div>
+                            </div>
+                        </div>
+                        <button class="btn-icon delete" style="padding:6px; align-self: center;"><i
+                                data-lucide="trash-2" width="16" height="16"></i></button>
+                    </div>
+
+                    <!-- Pending Task 2 -->
+                    <div class="list-item apps"
+                        style="border: 1px solid var(--card-border); padding: 10px; border-radius: 8px;">
+                        <div class="item-name">
+                            <div class="item-icon"><i data-lucide="pause-circle" width="16" height="16"
+                                    color="var(--warning)"></i></div>
+                            <div>
+                                <div style="font-size: 13px; font-weight: 500; color: var(--text-main);">Pause Charging
+                                </div>
+                                <div class="item-subtext">Tomorrow at 9:00 AM</div>
+                            </div>
+                        </div>
+                        <button class="btn-icon delete" style="padding:6px; align-self: center;"><i
+                                data-lucide="trash-2" width="16" height="16"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. SETTINGS -->
+        <div class="content screen" id="screen-settings">
+            <!-- New Menu Bar Format Settings -->
+            <div class="card">
+                <div class="section-title"><i data-lucide="layout-template" width="12" height="12"></i> Menu Bar Display
+                    Status</div>
+                <div class="setting-row">
+                    <span>Display Metric</span>
+                    <select class="custom-select" id="menu-display-type" onchange="updateMenuBar()">
+                        <option value="mem" selected>Memory</option>
+                        <option value="storage">Storage</option>
+                        <option value="cpu">CPU Usage</option>
+                        <option value="net">Network Traffic</option>
+                        <option value="both">Both</option>
+                        <option value="icon">Icon Only</option>
+                    </select>
+                </div>
+                <div class="setting-row">
+                    <span>Memory Format</span>
+                    <select class="custom-select" id="mem-format" onchange="updateMenuBar()">
+                        <option value="pct-use" selected>% Usage</option>
+                        <option value="num-use">Number (Usage)</option>
+                        <option value="num-left">Number (Left)</option>
+                    </select>
+                </div>
+                <div class="setting-row">
+                    <span>Storage Format</span>
+                    <select class="custom-select" id="storage-format" onchange="updateMenuBar()">
+                        <option value="pct-use">% Usage</option>
+                        <option value="num-use">Number (Usage)</option>
+                        <option value="num-left" selected>Number (Left)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title"><i data-lucide="sliders" width="12" height="12"></i> General</div>
+                <div class="setting-row">
+                    <span>Launch at Login</span>
+                    <input type="checkbox" class="toggle" checked>
+                </div>
+            </div>
+
+            <!-- App Icon Profile/About -->
+            <div
+                style="display: flex; gap:16px; align-items:center; justify-content:center; padding: 8px 12px; opacity:0.9; margin-top: auto;">
+                <!-- App Icon -->
+                <div
+                    style="width: 60px; height: 60px; border-radius: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); overflow: hidden; border: 1px solid rgba(255,255,255,0.1); flex-shrink: 0;">
+                    <img src="icon_128.png" style="width: 100%; height: 100%; object-fit: cover;" alt="MacMonitor Icon">
+                </div>
+                <div>
+                    <div style="font-weight: 600; font-size: 16px; margin-bottom: 2px;">MacMonitor</div>
+                    <div style="font-size: 12px; color: var(--text-muted);">Version 2.0.0</div>
+                    <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Apple Silicon Optimized
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer" id="main-footer">
+            <div id="footer-status" style="display:flex; align-items: center; gap: 6px;">
+                <i data-lucide="zap" width="12" height="12" color="var(--warning)"></i> Power Optimized
+            </div>
+            <span>v2.0.0</span>
+        </div>
+
+        <!-- Task Schedule Modal -->
+        <div class="modal-overlay" id="task-modal">
+            <div class="modal-content">
+                <div class="modal-title">
+                    <i data-lucide="calendar-plus" width="18" height="18" color="var(--accent)"></i>
+                    Schedule Action
+                </div>
+
+                <div class="input-group">
+                    <label>Action Type</label>
+                    <select id="modal-action-type">
+                        <option value="topup">Top Up to 100%</option>
+                        <option value="pause">Pause Charging</option>
+                        <option value="limit">Set Charge Limit (80%)</option>
+                        <option value="discharge">Discharge Battery</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Execution Time</label>
+                    <input type="time" id="modal-time" value="09:00">
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn"
+                        style="background: transparent; color: var(--text-muted); border: 1px solid transparent;"
+                        onclick="closeModal()">Cancel</button>
+                    <button class="btn btn-primary" onclick="closeModal()"
+                        style="background: var(--accent); color: white; border-color: var(--accent);">Schedule</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function switchScreen(screenId, btn) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen-' + screenId).classList.add('active');
+
+            document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function updateMemBtn() {
+            const cbs = document.querySelectorAll('.mem-cb');
+            const termBtn = document.getElementById('mem-term-btn');
+            const count = Array.from(cbs).filter(cb => cb.checked).length;
+            termBtn.disabled = count === 0;
+            termBtn.innerHTML = count > 0 ? `<i data-lucide="x-circle" width="14" height="14"></i> Quit (${count})` : `<i data-lucide="x-circle" width="14" height="14"></i> Quit Selected Processes`;
+            lucide.createIcons();
+        }
+
+        function simulateUpdate() {
+            const footerStatus = document.getElementById('footer-status');
+            footerStatus.innerHTML = `
+                <button class="btn" style="padding: 4px 10px; font-size: 11px; background: var(--blue); color: white; border: none; font-weight: 500;" onclick="window.location.reload()">
+                    <i data-lucide="download-cloud" width="12" height="12"></i> Restart to Update
+                </button>
+            `;
+            lucide.createIcons();
+        }
+
+        // Simulate an automatic background update check after 3 seconds
+        setTimeout(simulateUpdate, 3000);
+
+        // Theme Toggle Functionality
+        let isLight = false;
+        function toggleTheme() {
+            isLight = !isLight;
+            document.body.classList.toggle('light-theme', isLight);
+            document.getElementById('theme-btn').innerHTML = isLight ? '<i data-lucide="moon" width="16" height="16"></i>' : '<i data-lucide="sun" width="16" height="16"></i>';
+            lucide.createIcons();
+        }
+
+        // Menu Bar Setting Real Time Simulation
+        function updateMenuBar() {
+            const displayType = document.getElementById('menu-display-type').value;
+            const memFormat = document.getElementById('mem-format').value;
+            const storageFormat = document.getElementById('storage-format').value;
+
+            // Hardcoded simulation numbers (Match UI)
+            const memTotal = 16, memUsed = 12.4;
+            const memPct = Math.round((memUsed / memTotal) * 100);
+            const memLeft = (memTotal - memUsed).toFixed(1);
+
+            const storeTotal = 1000, storeUsed = 450;
+            const storePct = Math.round((storeUsed / storeTotal) * 100);
+            const storeLeft = (storeTotal - storeUsed);
+
+            // Formatting Logic
+            let memText = '';
+            if (memFormat === 'pct-use') memText = memPct + '%';
+            else if (memFormat === 'num-use') memText = memUsed.toFixed(1) + ' GB';
+            else if (memFormat === 'num-left') memText = memLeft + ' GB left';
+
+            let storeText = '';
+            if (storageFormat === 'pct-use') storeText = storePct + '%';
+            else if (storageFormat === 'num-use') storeText = storeUsed + ' GB';
+            else if (storageFormat === 'num-left') storeText = storeLeft + ' GB left';
+
+            let finalHtml = '';
+            if (displayType === 'mem') finalHtml = `RAM: ${memText}`;
+            else if (displayType === 'storage') finalHtml = `SSD: ${storeText}`;
+            else if (displayType === 'cpu') finalHtml = `CPU: 14%`;
+            else if (displayType === 'net') finalHtml = `NET: 124↓ 45↑`;
+            else if (displayType === 'both') finalHtml = `RAM: ${memText} | SSD: ${storeText}`;
+
+            const menubarItem = document.getElementById('macmonitor-menubar');
+            const iconHtml = '<i data-lucide="activity" width="14" height="14"></i>';
+
+            if (displayType === 'icon') {
+                menubarItem.innerHTML = iconHtml;
+            } else {
+                menubarItem.innerHTML = iconHtml + ` <span style="font-size:12px; font-weight:600; margin-left: 2px;">${finalHtml}</span>`;
+            }
+            lucide.createIcons();
+        }
+
+        // Initial call to set the menu bar on load
+        updateMenuBar();
+
+        function openModal() {
+            document.getElementById('task-modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('task-modal').classList.remove('active');
+        }
+    </script>
+
+</body>
+
+</html>
