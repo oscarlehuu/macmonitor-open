@@ -17,6 +17,7 @@ concurrency:
 
 jobs:
   release-please:
+    if: github.repository == 'oscarlehuu/macmonitor-open'
     runs-on: ubuntu-latest
 
     steps:
