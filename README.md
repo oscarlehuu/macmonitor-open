@@ -26,6 +26,7 @@ Open-source macOS (Apple Silicon) menu bar monitor.
 - Required CI secrets are documented in `scripts/release-checklist.md` (`RELEASE_PLEASE_TOKEN`, `SPARKLE_PRIVATE_KEY`, `UPDATES_REPO_TOKEN`, `APPLE_CERTIFICATE_P12_BASE64`, `APPLE_CERTIFICATE_PASSWORD`, `APPLE_SIGNING_IDENTITY`, `APPLE_NOTARY_KEY_ID`, `APPLE_NOTARY_ISSUER_ID`, `APPLE_NOTARY_API_KEY_BASE64`).
 - See `scripts/release-checklist.md` for full release flow and secrets.
 - For forks, configure repository variable `UPDATES_REPO` (format: `owner/repo`) if your update feed repository is not `<owner>/macmonitor-updates`.
+- Release workflow authority for official builds is this public repo (`oscarlehuu/macmonitor-open`, `main`).
 
 ## Install new build
 Use:
