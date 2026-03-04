@@ -1,0 +1,3 @@
+MacMonitor v0.5.5
+
+## Fixes\n- Prevent crash when scheduling UserNotifications callbacks\n- Improve DMG Applications shortcut rendering using Finder alias with symlink fallback
