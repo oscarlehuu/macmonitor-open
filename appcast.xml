@@ -3,6 +3,17 @@
     <channel>
         <title>MacMonitor</title>
         <item>
+            <title>0.5.4</title>
+            <pubDate>Wed, 04 Mar 2026 01:20:07 +0000</pubDate>
+            <link>https://oscarlehuu.github.io/MacMonitor</link>
+            <sparkle:fullReleaseNotesLink>https://oscarlehuu.github.io/MacMonitor/notes/MacMonitor-0.5.4-22.txt</sparkle:fullReleaseNotesLink>
+            <sparkle:version>22</sparkle:version>
+            <sparkle:shortVersionString>0.5.4</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <sparkle:releaseNotesLink>https://oscarlehuu.github.io/MacMonitor/notes/MacMonitor-0.5.4-22.txt</sparkle:releaseNotesLink>
+            <enclosure url="https://oscarlehuu.github.io/MacMonitor/downloads/MacMonitor-0.5.4-22.zip" length="4213941" type="application/octet-stream" sparkle:edSignature="7OqibC6ZedsgaN6EtTbzYYyHCdqaHvfz1MHXJcas/WgSMhlNVvy47zCHTk0flWMryZV5jZp11Zsa4TMesU9WAg=="/>
+        </item>
+        <item>
             <title>0.5.3</title>
             <pubDate>Wed, 04 Mar 2026 01:00:24 +0000</pubDate>
             <link>https://oscarlehuu.github.io/MacMonitor</link>
