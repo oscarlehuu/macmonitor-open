@@ -3,17 +3,17 @@
 Public distribution and issue tracker for MacMonitor (macOS menu bar monitor for Apple Silicon).
 
 ## Download
-- Latest release: https://github.com/oscarlehuu/macmonitor-open/releases/latest
-- All releases: https://github.com/oscarlehuu/macmonitor-open/releases
+- Latest release: https://github.com/oscarlehuu/MacMonitor/releases/latest
+- All releases: https://github.com/oscarlehuu/MacMonitor/releases
 
 ## Automatic Updates (Sparkle)
-- Appcast feed: https://oscarlehuu.github.io/macmonitor-open/appcast.xml
-- Notes feed path: `https://oscarlehuu.github.io/macmonitor-open/notes/`
-- Download payload path: `https://oscarlehuu.github.io/macmonitor-open/downloads/`
+- Appcast feed: https://oscarlehuu.github.io/MacMonitor/appcast.xml
+- Notes feed path: `https://oscarlehuu.github.io/MacMonitor/notes/`
+- Download payload path: `https://oscarlehuu.github.io/MacMonitor/downloads/`
 
 ## Report Bugs / Request Features
-- Open an issue: https://github.com/oscarlehuu/macmonitor-open/issues/new/choose
-- Existing issues: https://github.com/oscarlehuu/macmonitor-open/issues
+- Open an issue: https://github.com/oscarlehuu/MacMonitor/issues/new/choose
+- Existing issues: https://github.com/oscarlehuu/MacMonitor/issues
 
 ## Scope Of This Repository
 - This repository is for public binaries, changelog, and issue tracking.
