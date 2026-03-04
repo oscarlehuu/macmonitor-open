@@ -1,0 +1,13 @@
+MacMonitor v0.5.7
+
+## [0.5.7](https://github.com/oscarlehuu/MacMonitor-private/compare/v0.5.6...v0.5.7) (2026-03-04)
+
+
+### Bug Fixes
+
+* **ui:** recover memory and storage popover updates ([c87f8d4](https://github.com/oscarlehuu/MacMonitor-private/commit/c87f8d49f237b3d6c1cc8ad16b403bdbf9bbfbd6))
+
+---
+This PR was generated with [Release Please](https://github.com/googleapis/release-please). See [documentation](https://github.com/googleapis/release-please#release-please).
+
+<!-- CURSOR_SUMMARY -->
