@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.5.13](https://github.com/oscarlehuu/MacMonitor-private/compare/v0.5.12...v0.5.13) (2026-03-10)
+
+
+### Bug Fixes
+
+* restore status bar responsiveness ([#55](https://github.com/oscarlehuu/MacMonitor-private/issues/55)) ([e37af51](https://github.com/oscarlehuu/MacMonitor-private/commit/e37af51822e862412f0be25566e98d91c97554f4))
+
+## [0.5.12](https://github.com/oscarlehuu/MacMonitor-private/compare/v0.5.11...v0.5.12) (2026-03-08)
+
+
+### Bug Fixes
+
+* improve storage workflows and live network reporting ([#52](https://github.com/oscarlehuu/MacMonitor-private/issues/52)) ([8936177](https://github.com/oscarlehuu/MacMonitor-private/commit/8936177f961226367ac4088230e6fc77dc14b0e7))
+* stabilize menu bar launch and network display ([#54](https://github.com/oscarlehuu/MacMonitor-private/issues/54)) ([25d7c91](https://github.com/oscarlehuu/MacMonitor-private/commit/25d7c91a7db3c2a0da0ada082351e8dc8056cfd7))
+
 ## [0.5.11](https://github.com/oscarlehuu/MacMonitor-private/compare/v0.5.10...v0.5.11) (2026-03-06)
 
 
