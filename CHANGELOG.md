@@ -1,74 +1,74 @@
 # Changelog
 
-## [0.5.13](https://github.com/oscarlehuu/MacMonitor-private/compare/v0.5.12...v0.5.13) (2026-03-10)
+## [0.5.13](https://github.com/oscarlehuu/MacMonitor/compare/v0.5.12...v0.5.13) (2026-03-10)
 
 
 ### Bug Fixes
 
-* restore status bar responsiveness ([#55](https://github.com/oscarlehuu/MacMonitor-private/issues/55)) ([e37af51](https://github.com/oscarlehuu/MacMonitor-private/commit/e37af51822e862412f0be25566e98d91c97554f4))
+* restore status bar responsiveness ([#55](https://github.com/oscarlehuu/MacMonitor/issues/55)) ([e37af51](https://github.com/oscarlehuu/MacMonitor/commit/e37af51822e862412f0be25566e98d91c97554f4))
 
-## [0.5.12](https://github.com/oscarlehuu/MacMonitor-private/compare/v0.5.11...v0.5.12) (2026-03-08)
-
-
-### Bug Fixes
-
-* improve storage workflows and live network reporting ([#52](https://github.com/oscarlehuu/MacMonitor-private/issues/52)) ([8936177](https://github.com/oscarlehuu/MacMonitor-private/commit/8936177f961226367ac4088230e6fc77dc14b0e7))
-* stabilize menu bar launch and network display ([#54](https://github.com/oscarlehuu/MacMonitor-private/issues/54)) ([25d7c91](https://github.com/oscarlehuu/MacMonitor-private/commit/25d7c91a7db3c2a0da0ada082351e8dc8056cfd7))
-
-## [0.5.11](https://github.com/oscarlehuu/MacMonitor-private/compare/v0.5.10...v0.5.11) (2026-03-06)
+## [0.5.12](https://github.com/oscarlehuu/MacMonitor/compare/v0.5.11...v0.5.12) (2026-03-08)
 
 
 ### Bug Fixes
 
-* restore updater and color picker behavior ([#50](https://github.com/oscarlehuu/MacMonitor-private/issues/50)) ([7de4eae](https://github.com/oscarlehuu/MacMonitor-private/commit/7de4eae365b2aa78f9139b0c0f853923adbc6659))
+* improve storage workflows and live network reporting ([#52](https://github.com/oscarlehuu/MacMonitor/issues/52)) ([8936177](https://github.com/oscarlehuu/MacMonitor/commit/8936177f961226367ac4088230e6fc77dc14b0e7))
+* stabilize menu bar launch and network display ([#54](https://github.com/oscarlehuu/MacMonitor/issues/54)) ([25d7c91](https://github.com/oscarlehuu/MacMonitor/commit/25d7c91a7db3c2a0da0ada082351e8dc8056cfd7))
 
-## [0.5.10](https://github.com/oscarlehuu/MacMonitor-private/compare/v0.5.9...v0.5.10) (2026-03-05)
-
-
-### Bug Fixes
-
-* restore view model API compatibility for release build ([#48](https://github.com/oscarlehuu/MacMonitor-private/issues/48)) ([780db7b](https://github.com/oscarlehuu/MacMonitor-private/commit/780db7bb6c88ce69f133f67dfb46217d5f3b0d9f))
-
-## [0.5.9](https://github.com/oscarlehuu/MacMonitor-private/compare/v0.5.8...v0.5.9) (2026-03-05)
+## [0.5.11](https://github.com/oscarlehuu/MacMonitor/compare/v0.5.10...v0.5.11) (2026-03-06)
 
 
 ### Bug Fixes
 
-* improve menu bar composer preview and network rate handling ([#46](https://github.com/oscarlehuu/MacMonitor-private/issues/46)) ([d47330a](https://github.com/oscarlehuu/MacMonitor-private/commit/d47330af5366ffcadaa2b1d9bca2dca85449c570))
+* restore updater and color picker behavior ([#50](https://github.com/oscarlehuu/MacMonitor/issues/50)) ([7de4eae](https://github.com/oscarlehuu/MacMonitor/commit/7de4eae365b2aa78f9139b0c0f853923adbc6659))
 
-## [0.5.8](https://github.com/oscarlehuu/MacMonitor-private/compare/v0.5.7...v0.5.8) (2026-03-04)
-
-
-### Bug Fixes
-
-* **release:** add notarized pkg distribution asset ([a91a6a8](https://github.com/oscarlehuu/MacMonitor-private/commit/a91a6a83d45a38b0b311bea051a53d99b99deecf))
-* **release:** auto-detect installer signing identity for pkg ([7cb8dd3](https://github.com/oscarlehuu/MacMonitor-private/commit/7cb8dd3e611233bdf792cbf1cca62824a75b8f45))
-* **release:** build DMG with HFS+ for stable Finder rendering ([b0a6839](https://github.com/oscarlehuu/MacMonitor-private/commit/b0a68394d93f523ad6cb2b8eb88a7e584ae7c40f))
-* **release:** remove brittle dmg spctl assessment ([6184d1c](https://github.com/oscarlehuu/MacMonitor-private/commit/6184d1cb3364ce89e41dc8d265f5fa5464312777))
-* **release:** require signed installer certificate for pkg ([fd69eeb](https://github.com/oscarlehuu/MacMonitor-private/commit/fd69eebfb5d60714c8ca2901944f1cd9f441be29))
-* **release:** simplify asset names and stabilize DMG Applications link ([d737ce7](https://github.com/oscarlehuu/MacMonitor-private/commit/d737ce7bf8d21c25b110212c01480630e23c8574))
-
-## [0.5.7](https://github.com/oscarlehuu/MacMonitor-private/compare/v0.5.6...v0.5.7) (2026-03-04)
+## [0.5.10](https://github.com/oscarlehuu/MacMonitor/compare/v0.5.9...v0.5.10) (2026-03-05)
 
 
 ### Bug Fixes
 
-* **ui:** recover memory and storage popover updates ([c87f8d4](https://github.com/oscarlehuu/MacMonitor-private/commit/c87f8d49f237b3d6c1cc8ad16b403bdbf9bbfbd6))
+* restore view model API compatibility for release build ([#48](https://github.com/oscarlehuu/MacMonitor/issues/48)) ([780db7b](https://github.com/oscarlehuu/MacMonitor/commit/780db7bb6c88ce69f133f67dfb46217d5f3b0d9f))
 
-## [0.5.4](https://github.com/oscarlehuu/MacMonitor-private/compare/v0.5.3...v0.5.4) (2026-03-04)
-
-
-### Bug Fixes
-
-* prevent notifier callback crash and improve dmg Applications alias ([#40](https://github.com/oscarlehuu/MacMonitor-private/issues/40)) ([3dc691a](https://github.com/oscarlehuu/MacMonitor-private/commit/3dc691a40eab55d5464df42150b88fedac65fde7))
-* **release:** add Applications shortcut to dmg ([#38](https://github.com/oscarlehuu/MacMonitor-private/issues/38)) ([a6e8cc9](https://github.com/oscarlehuu/MacMonitor-private/commit/a6e8cc9c450cadbf97953eed29bca5e0be982e31))
-
-## [0.5.3](https://github.com/oscarlehuu/MacMonitor-private/compare/v0.5.2...v0.5.3) (2026-03-04)
+## [0.5.9](https://github.com/oscarlehuu/MacMonitor/compare/v0.5.8...v0.5.9) (2026-03-05)
 
 
 ### Bug Fixes
 
-* **release:** add Applications shortcut to dmg ([#38](https://github.com/oscarlehuu/MacMonitor-private/issues/38)) ([a6e8cc9](https://github.com/oscarlehuu/MacMonitor-private/commit/a6e8cc9c450cadbf97953eed29bca5e0be982e31))
+* improve menu bar composer preview and network rate handling ([#46](https://github.com/oscarlehuu/MacMonitor/issues/46)) ([d47330a](https://github.com/oscarlehuu/MacMonitor/commit/d47330af5366ffcadaa2b1d9bca2dca85449c570))
+
+## [0.5.8](https://github.com/oscarlehuu/MacMonitor/compare/v0.5.7...v0.5.8) (2026-03-04)
+
+
+### Bug Fixes
+
+* **release:** add notarized pkg distribution asset ([a91a6a8](https://github.com/oscarlehuu/MacMonitor/commit/a91a6a83d45a38b0b311bea051a53d99b99deecf))
+* **release:** auto-detect installer signing identity for pkg ([7cb8dd3](https://github.com/oscarlehuu/MacMonitor/commit/7cb8dd3e611233bdf792cbf1cca62824a75b8f45))
+* **release:** build DMG with HFS+ for stable Finder rendering ([b0a6839](https://github.com/oscarlehuu/MacMonitor/commit/b0a68394d93f523ad6cb2b8eb88a7e584ae7c40f))
+* **release:** remove brittle dmg spctl assessment ([6184d1c](https://github.com/oscarlehuu/MacMonitor/commit/6184d1cb3364ce89e41dc8d265f5fa5464312777))
+* **release:** require signed installer certificate for pkg ([fd69eeb](https://github.com/oscarlehuu/MacMonitor/commit/fd69eebfb5d60714c8ca2901944f1cd9f441be29))
+* **release:** simplify asset names and stabilize DMG Applications link ([d737ce7](https://github.com/oscarlehuu/MacMonitor/commit/d737ce7bf8d21c25b110212c01480630e23c8574))
+
+## [0.5.7](https://github.com/oscarlehuu/MacMonitor/compare/v0.5.6...v0.5.7) (2026-03-04)
+
+
+### Bug Fixes
+
+* **ui:** recover memory and storage popover updates ([c87f8d4](https://github.com/oscarlehuu/MacMonitor/commit/c87f8d49f237b3d6c1cc8ad16b403bdbf9bbfbd6))
+
+## [0.5.4](https://github.com/oscarlehuu/MacMonitor/compare/v0.5.3...v0.5.4) (2026-03-04)
+
+
+### Bug Fixes
+
+* prevent notifier callback crash and improve dmg Applications alias ([#40](https://github.com/oscarlehuu/MacMonitor/issues/40)) ([3dc691a](https://github.com/oscarlehuu/MacMonitor/commit/3dc691a40eab55d5464df42150b88fedac65fde7))
+* **release:** add Applications shortcut to dmg ([#38](https://github.com/oscarlehuu/MacMonitor/issues/38)) ([a6e8cc9](https://github.com/oscarlehuu/MacMonitor/commit/a6e8cc9c450cadbf97953eed29bca5e0be982e31))
+
+## [0.5.3](https://github.com/oscarlehuu/MacMonitor/compare/v0.5.2...v0.5.3) (2026-03-04)
+
+
+### Bug Fixes
+
+* **release:** add Applications shortcut to dmg ([#38](https://github.com/oscarlehuu/MacMonitor/issues/38)) ([a6e8cc9](https://github.com/oscarlehuu/MacMonitor/commit/a6e8cc9c450cadbf97953eed29bca5e0be982e31))
 
 ## [0.5.2](https://github.com/oscarlehuu/macmonitor/compare/v0.5.1...v0.5.2) (2026-03-03)
 
